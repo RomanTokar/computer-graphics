@@ -20,7 +20,7 @@ const Fractal = () => {
         />
       }
       View={
-        <div ref={viewWrapperRef}>
+        <div ref={viewWrapperRef} style={{height: '100%', position: 'relative'}}>
           <FractalView iterationCount={iterationCount} fractal={fractal}
                        isClear={isClear} KochSnowflakeWidth={viewWrapperRef.current?.clientWidth}/>
         </div>
