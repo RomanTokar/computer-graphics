@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import MainWrapper from '../../layous/MainWrapper';
 import FractalProperties from './FractalProperties';
 import FractalView from './FractalView';
+import useWindowWidth from '../../hooks/useWindowWidth';
 
 const Fractal = () => {
   const [iterationCount, setIterationCount] = useState(5);
   const [fractal, setFractal] = useState('pifagoras-tree');
   const [isClear, setIsClear] = useState(true);
+  const viewWrapperRef = useRef();
+  useWindowWidth();
 
   return (
     <MainWrapper
@@ -17,7 +20,10 @@ const Fractal = () => {
         />
       }
       View={
-        <FractalView iterationCount={iterationCount} fractal={fractal} isClear={isClear}/>
+        <div ref={viewWrapperRef}>
+          <FractalView iterationCount={iterationCount} fractal={fractal}
+                       isClear={isClear} KochSnowflakeWidth={viewWrapperRef.current?.clientWidth}/>
+        </div>
       }
     />
   );
