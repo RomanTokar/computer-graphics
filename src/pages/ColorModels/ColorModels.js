@@ -2,9 +2,7 @@ import React from 'react';
 
 const ColorModels = () => {
   return (
-    <div>
-      ColorModels
-    </div>
+    <div>ColorModels</div>
   );
 };
 

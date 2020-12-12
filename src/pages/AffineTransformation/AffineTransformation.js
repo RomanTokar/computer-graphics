@@ -2,9 +2,7 @@ import React from 'react';
 
 const AffineTransformation = () => {
   return (
-    <div>
-      AffineTransformation
-    </div>
+    <div>AffineTransformation</div>
   );
 };
 

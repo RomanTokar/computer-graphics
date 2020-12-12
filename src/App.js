@@ -33,7 +33,7 @@ const App = () => {
           <Grid item lg={4} md={2} sm={1}/>
           <Grid item container justify={'center'} lg={1} md={1} sm={1} xs={1}>
             <Grid item>
-            <Logo/>
+              <Logo/>
             </Grid>
           </Grid>
         </Grid>

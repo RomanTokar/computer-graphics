@@ -189,11 +189,6 @@ const KochSnowflake = ({
 
   const drawByPoints = (ctx, points, offset = [0, 0]) => {
     if (points.length > 1) {
-      console.log('drawByPoints', points.length);
-      if (points.length < 200) {
-        console.log('points', points);
-      }
-
       ctx.fillStyle = 'blue';
       ctx.strokeStyle = 'red';
 
