@@ -7,7 +7,7 @@ const CustomTextField = ({label, disabled, ...props}) => {
   const messageError = meta.error && meta.touched ? meta.error : '';
 
   return (
-    <TextField {...field} {...{label, disabled}} variant={'outlined'} error={!!meta.error}
+    <TextField {...field} {...{label, disabled}} variant={'outlined'} error={!!messageError}
                helperText={messageError}/>
   );
 };
