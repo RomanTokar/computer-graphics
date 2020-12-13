@@ -2,7 +2,7 @@ import React from 'react';
 import {AnimatedPythagorasTree} from 'react-armory-pythagoras-tree';
 import KochSnowflake from './KochSnowflake';
 
-const FractalView = ({fractal, iterationCount, isClear, KochSnowflakeWidth}) => {
+const View = ({fractal, iterationCount, isClear, KochSnowflakeWidth}) => {
   return (
     !isClear &&
     <>
@@ -14,4 +14,4 @@ const FractalView = ({fractal, iterationCount, isClear, KochSnowflakeWidth}) => 
   );
 };
 
-export default FractalView;
+export default View;

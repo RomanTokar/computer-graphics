@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
 
 import MainWrapper from '../../layous/MainWrapper';
-import FractalProperties from './FractalProperties';
-import FractalView from './FractalView';
+import FractalProperties from './Properties';
+import View from './View';
 import useWindowWidth from '../../hooks/useWindowWidth';
 
 const Fractal = () => {
@@ -21,8 +21,8 @@ const Fractal = () => {
       }
       View={
         <div ref={viewWrapperRef} style={{height: '100%', position: 'relative'}}>
-          <FractalView iterationCount={iterationCount} fractal={fractal}
-                       isClear={isClear} KochSnowflakeWidth={viewWrapperRef.current?.clientWidth}/>
+          <View iterationCount={iterationCount} fractal={fractal}
+                isClear={isClear} KochSnowflakeWidth={viewWrapperRef.current?.clientWidth}/>
         </div>
       }
     />

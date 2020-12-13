@@ -15,14 +15,15 @@ const useStyles = makeStyles({
     background: '#E6E6E6',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    border: '1px solid #C9C9C9'
   },
   propertiesTitle: {
     fontSize: 24,
     fontWeight: 700
   },
   propertiesContent: {
-    padding: '25px 20px'
+    padding: '25px 2%'
   }
 });
 

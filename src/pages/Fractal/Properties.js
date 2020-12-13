@@ -3,7 +3,7 @@ import {Field, FieldArray, Form, Formik} from 'formik';
 import {Button, Grid, MenuItem} from '@material-ui/core';
 import CustomSelect from '../../layous/CustomSelect';
 
-const FractalProperties = ({setFractal, setIterationCount, setIsClear}) => {
+const Properties = ({setFractal, setIterationCount, setIsClear}) => {
   const iterationCounts = new Array(5).fill(0).map((_, i) => i + 1);
   const fractals = ['pifagoras-tree', 'knoch-snowflake'];
 
@@ -79,4 +79,4 @@ const FractalProperties = ({setFractal, setIterationCount, setIsClear}) => {
   );
 };
 
-export default FractalProperties;
+export default Properties;

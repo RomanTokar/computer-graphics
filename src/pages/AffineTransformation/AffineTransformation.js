@@ -1,8 +1,18 @@
 import React from 'react';
+import MainWrapper from '../../layous/MainWrapper';
+import AffineTransformationProperties from './AffineTransformationProperties';
+import AffineTransformationView from './AffineTransformationView';
 
 const AffineTransformation = () => {
   return (
-    <div>AffineTransformation</div>
+    <MainWrapper
+      Properties={
+        <AffineTransformationProperties/>
+      }
+      View={
+        <AffineTransformationView/>
+      }
+    />
   );
 };
 
