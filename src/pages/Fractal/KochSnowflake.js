@@ -162,7 +162,8 @@ const KochSnowflake = ({
   height = 600,
   points = initPoints,
   invertX = false,
-  invertY = false
+  invertY = false,
+  colorScheme = 'transparent'
 }) => {
   const canvasRef = useRef('canvas');
 
@@ -187,10 +188,27 @@ const KochSnowflake = ({
     }
   };
 
+  const getColors = () => {
+    switch (colorScheme) {
+      case 'transparent':
+        return ['transparent', 'black']
+      case 'colorSchema1':
+        return ['red', 'blue']
+      case 'colorSchema2':
+        return ['blue', 'green']
+      case 'colorSchema3':
+        return ['green', 'red']
+      default:
+        return ['transparent', 'black']
+    }
+  }
+
   const drawByPoints = (ctx, points, offset = [0, 0]) => {
     if (points.length > 1) {
-      ctx.fillStyle = 'blue';
-      ctx.strokeStyle = 'red';
+      const [fillStyle, strokeStyle] = getColors();
+      ctx.fillStyle = fillStyle;
+      ctx.strokeStyle = strokeStyle;
+      ctx.lineWidth = 2;
 
       ctx.beginPath();
       ctx.moveTo(offset[0] + points[0].x, offset[1] + points[0].y);

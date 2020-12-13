@@ -8,7 +8,10 @@ const View = ({fractal, iterationCount, colorScheme, isClear, KochSnowflakeWidth
     <>
       {fractal === 'pifagoras-tree' &&
       <AnimatedPythagorasTree colorSchema={colorScheme} totalLevels={iterationCount}/>}
-      {fractal === 'knoch-snowflake' && <KochSnowflake width={KochSnowflakeWidth} zoom={iterationCount}/>}
+      {fractal === 'knoch-snowflake' && <KochSnowflake width={KochSnowflakeWidth}
+                                                       zoom={iterationCount}
+                                                       colorScheme={colorScheme}
+      />}
     </>
 
   );
