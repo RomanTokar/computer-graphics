@@ -8,6 +8,7 @@ import useWindowWidth from '../../hooks/useWindowWidth';
 const Fractal = () => {
   const [iterationCount, setIterationCount] = useState(5);
   const [fractal, setFractal] = useState('pifagoras-tree');
+  const [colorScheme, setColorScheme] = useState('transparent');
   const [isClear, setIsClear] = useState(true);
   const viewWrapperRef = useRef();
   useWindowWidth();
@@ -16,12 +17,12 @@ const Fractal = () => {
     <MainWrapper
       Properties={
         <FractalProperties setIterationCount={setIterationCount} setFractal={setFractal}
-                           setIsClear={setIsClear}
+                           setIsClear={setIsClear} setColorScheme={setColorScheme}
         />
       }
       View={
         <div ref={viewWrapperRef} style={{height: '100%', position: 'relative'}}>
-          <View iterationCount={iterationCount} fractal={fractal}
+          <View iterationCount={iterationCount} fractal={fractal} colorScheme={colorScheme}
                 isClear={isClear} KochSnowflakeWidth={viewWrapperRef.current?.clientWidth}/>
         </div>
       }

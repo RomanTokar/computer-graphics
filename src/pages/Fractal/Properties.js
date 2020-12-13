@@ -3,19 +3,22 @@ import {Field, FieldArray, Form, Formik} from 'formik';
 import {Button, Grid, MenuItem} from '@material-ui/core';
 import CustomSelect from '../../layous/CustomSelect';
 
-const Properties = ({setFractal, setIterationCount, setIsClear}) => {
+const Properties = ({setFractal, setIterationCount, setColorScheme, setIsClear}) => {
   const iterationCounts = new Array(5).fill(0).map((_, i) => i + 1);
   const fractals = ['pifagoras-tree', 'knoch-snowflake'];
+  const colorSchemes = ['transparent', 'colorSchema1', 'colorSchema2', 'colorSchema3'];
 
   return (
     <Formik
       initialValues={{
         fractals: [{type: 'pifagoras-tree', id: '' + Math.random()}],
-        iterationCounts: [{type: '5', id: '' + Math.random()}]
+        iterationCounts: [{type: '5', id: '' + Math.random()}],
+        colorSchemes: [{type: 'transparent', id: '' + Math.random()}]
       }}
-      onSubmit={({fractals, iterationCounts}) => {
+      onSubmit={({fractals, iterationCounts, colorSchemes}) => {
         setIsClear(false);
         setFractal(fractals[0].type);
+        setColorScheme(colorSchemes[0].type)
         setIterationCount(iterationCounts[0].type);
       }}>
       {({values}) => (
@@ -33,6 +36,24 @@ const Properties = ({setFractal, setIterationCount, setIsClear}) => {
                         {fractals.map((el) => (
                           <MenuItem key={el} value={el}>{el}</MenuItem>
                         ))}
+                      </Field>
+                    )
+                  )}
+                </>
+              </FieldArray>
+            </Grid>
+            <Grid item>
+              <FieldArray name="colorSchemes">
+                <>
+                  {values.colorSchemes.map((colorScheme, index) =>
+                    (
+                      <Field name={`colorSchemes.${index}.type`} type="select"
+                             as={CustomSelect} key={colorScheme.id}
+                             label={'Color Scheme'}
+                      >
+                        {colorSchemes.map(
+                          (el) => <MenuItem key={el} value={el}>{el}</MenuItem>)
+                        }
                       </Field>
                     )
                   )}
