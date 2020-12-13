@@ -6,7 +6,7 @@ import CustomSelect from '../../layous/CustomSelect';
 const Properties = ({setFractal, setIterationCount, setColorScheme, setIsClear}) => {
   const iterationCounts = new Array(5).fill(0).map((_, i) => i + 1);
   const fractals = ['pifagoras-tree', 'knoch-snowflake'];
-  const colorSchemes = ['transparent', 'colorSchema1', 'colorSchema2', 'colorSchema3'];
+  const colorSchemes = ['transparent', 'colorScheme1', 'colorScheme2', 'colorScheme3'];
 
   return (
     <Formik

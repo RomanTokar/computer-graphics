@@ -1,8 +1,8 @@
 import React, {useRef} from 'react';
-import {AnimatedPythagorasTree} from 'react-armory-pythagoras-tree';
 import KochSnowflake from './KochSnowflake';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import {Grid, makeStyles, Typography} from '@material-ui/core';
+import {AnimatedPythagorasTree} from './PifagorasTree';
 
 const useStyles = makeStyles({
   viewTitle: {
@@ -33,7 +33,7 @@ const View = ({fractal, iterationCount, colorScheme, isClear}) => {
         {!isClear &&
         <div ref={viewWrapperRef} className={'dfjdk'} style={{height: '100%', position: 'relative'}}>
           {fractal === 'pifagoras-tree' &&
-          <AnimatedPythagorasTree colorSchema={colorScheme} totalLevels={iterationCount}/>}
+          <AnimatedPythagorasTree animating={true} colorScheme={colorScheme} totalLevels={iterationCount}/>}
           {fractal === 'knoch-snowflake' &&
           <KochSnowflake width={viewWrapperRef.current?.clientWidth}
                          zoom={iterationCount}
