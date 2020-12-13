@@ -14,7 +14,7 @@ const Properties = ({
         blueFilterSaturation, blueFilterBrightness
       }}
       />
-      <Divider/>
+      <Divider style={{margin: '20px 0'}}/>
       <ConvertProperties/>
     </>
   );
