@@ -2,25 +2,31 @@ import React from 'react';
 import {Formik, Form, Field} from 'formik';
 import {Button, Grid} from '@material-ui/core';
 import CustomTextField from '../../layous/CustomTextField';
-import * as yup from 'yup'
+import * as yup from 'yup';
+
+const yupNumberField = yup.number().required().typeError('It must be number');
 
 const validationScheme = yup.object({
-  rotation: yup.number().required().typeError('It must be number'),
-  ax: yup.number().required().typeError('It must be number'),
-  ay: yup.number().required().typeError('It must be number'),
-  bx: yup.number().required().typeError('It must be number'),
-  by: yup.number().required().typeError('It must be number'),
-  cx: yup.number().required().typeError('It must be number'),
-  cy: yup.number().required().typeError('It must be number')
-})
+  rotation: yupNumberField,
+  ax: yupNumberField,
+  ay: yupNumberField,
+  bx: yupNumberField,
+  by: yupNumberField,
+  cx: yupNumberField,
+  cy: yupNumberField
+});
 
-const AffineTransformationProperties = ({setProperties, properties}) => {
+const Properties = ({setProperties, properties}) => {
   return (
     <Formik
       initialValues={properties}
       validationSchema={validationScheme}
       onSubmit={(values) => {
-        setProperties(values)
+        setProperties(
+          Object.entries(values).reduce(
+            (acc, [key, value]) => ({...acc, [key]: +value}), {}
+          )
+        );
       }}
     >
       <Form>
@@ -61,4 +67,4 @@ const AffineTransformationProperties = ({setProperties, properties}) => {
   );
 };
 
-export default AffineTransformationProperties;
+export default Properties;
