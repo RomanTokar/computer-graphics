@@ -38,7 +38,7 @@ const App = () => {
           </Grid>
         </Grid>
       </AppBar>
-      <main style={{margin: '30px 60px'}}>
+      <main>
         <Switch>
           {routes.map(({path, component}) => (
             <Route key={path} path={path} component={component}/>

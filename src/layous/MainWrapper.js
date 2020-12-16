@@ -3,7 +3,9 @@ import {Grid, makeStyles, Paper, Typography} from '@material-ui/core';
 
 const useStyles = makeStyles({
   mainContainer: {
-    height: 'calc(100vh - 160px)'
+    height: 'calc(100vh - 160px)',
+    padding: '30px 80px',
+    width: '100%'
   },
   mainItems: {
     border: '1px solid #C9C9C9',
