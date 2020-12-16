@@ -1,68 +1,63 @@
 import React from 'react';
-import {Formik, Form, Field} from 'formik';
+import {Formik, Form, Field, FieldArray} from 'formik';
 import {Button, Grid} from '@material-ui/core';
 import CustomTextField from '../../layous/CustomTextField';
 import * as yup from 'yup';
 
 const yupNumberField = yup.number().required().typeError('It must be number');
+const yupNumberFieldTuple = yup.array().of(yupNumberField);
 
 const validationScheme = yup.object({
-  rotation: yupNumberField,
-  ax: yupNumberField,
-  ay: yupNumberField,
-  bx: yupNumberField,
-  by: yupNumberField,
-  cx: yupNumberField,
-  cy: yupNumberField
+  rotationInDegrees: yupNumberField,
+  points: yup.array().of(yupNumberFieldTuple)
 });
 
 const Properties = ({setProperties, properties}) => {
+  const axis = ['x', 'y'];
+  const pointsName = ['A', 'B', 'C'];
+
   return (
     <Formik
       initialValues={properties}
       validationSchema={validationScheme}
-      onSubmit={(values) => {
-        setProperties(
-          Object.entries(values).reduce(
-            (acc, [key, value]) => ({...acc, [key]: +value}), {}
-          )
-        );
+      onSubmit={({rotationInDegrees, points}) => {
+        setProperties({
+          rotationInDegrees: +rotationInDegrees,
+          points: points.map(p => [+p[0], +p[1]])
+        });
       }}
     >
-      <Form>
-        <Grid container direction={'column'} spacing={4} alignItems={'center'}>
-          <Grid item>
-            <Field name={'rotation'} label={'Rotation'} as={CustomTextField}/>
+      {({values}) => (
+        <Form>
+          <Grid container direction={'column'} spacing={4} alignItems={'center'}>
+            <Grid item>
+              <Field name={'rotationInDegrees'} label={'Rotation in degrees'} as={CustomTextField}/>
+            </Grid>
+            <FieldArray name={'points'}>
+              {() => (
+                values.points.map((point, pointIndex) => (
+                  <FieldArray key={pointIndex} name={`points.${pointIndex}`}>
+                    {() => (
+                      <Grid item container spacing={2}>
+                        {point.map((coordinate, coordinateIndex) => (
+                          <Grid key={coordinateIndex} item xs={6}>
+                            <Field name={`points.${pointIndex}.${coordinateIndex}`}
+                                   label={`${pointsName[pointIndex]}${axis[coordinateIndex]}`}
+                                   as={CustomTextField}/>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    )}
+                  </FieldArray>
+                ))
+              )}
+            </FieldArray>
+            <Grid item>
+              <Button type={'submit'} color={'primary'} variant={'contained'}>Build</Button>
+            </Grid>
           </Grid>
-          <Grid item container spacing={2}>
-            <Grid item xs={6}>
-              <Field name={'ax'} label={'Ax'} as={CustomTextField}/>
-            </Grid>
-            <Grid item xs={6}>
-              <Field name={'ay'} label={'Ay'} as={CustomTextField}/>
-            </Grid>
-          </Grid>
-          <Grid item container spacing={2}>
-            <Grid item xs={6}>
-              <Field name={'bx'} label={'Bx'} as={CustomTextField}/>
-            </Grid>
-            <Grid item xs={6}>
-              <Field name={'by'} label={'By'} as={CustomTextField}/>
-            </Grid>
-          </Grid>
-          <Grid item container spacing={2}>
-            <Grid item xs={6}>
-              <Field name={'cx'} label={'Cx'} as={CustomTextField}/>
-            </Grid>
-            <Grid item xs={6}>
-              <Field name={'cy'} label={'Cy'} as={CustomTextField}/>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Button type={'submit'} color={'primary'} variant={'contained'}>Build</Button>
-          </Grid>
-        </Grid>
-      </Form>
+        </Form>
+      )}
     </Formik>
   );
 };

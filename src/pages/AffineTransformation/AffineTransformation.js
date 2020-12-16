@@ -5,13 +5,8 @@ import View from './View';
 
 const AffineTransformation = () => {
   const [properties, setProperties] = useState({
-    rotation: 0,
-    ax: 0,
-    ay: 0,
-    bx: 0,
-    by: 0,
-    cx: 0,
-    cy: 0
+    rotationInDegrees: 0,
+    points: [[0, 0], [0, 0], [0, 0]]
   });
 
   return (

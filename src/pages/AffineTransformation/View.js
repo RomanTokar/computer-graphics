@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Grid, makeStyles, Typography} from '@material-ui/core';
-import {select, scaleLinear, min, max, axisBottom, axisLeft, line} from 'd3';
+import {axisBottom, axisLeft, line, max, min, scaleLinear, select} from 'd3';
 
 const useStyles = makeStyles({
   viewTitle: {
@@ -18,22 +18,43 @@ const useStyles = makeStyles({
 });
 
 const View = ({properties}) => {
-  const classes = useStyles();
-  const ref = useRef();
-  const [points, setPoints] = useState(null);
-  const [animating, setAnimating] = useState(false);
-  const center = useRef([]);
+    const classes = useStyles();
+    const ref = useRef();
+    const [points, setPoints] = useState([[0, 0], [0, 0], [0, 0], [0, 0]]);
+    const [animating, setAnimating] = useState(false);
+    const triangleCenter = useRef([0, 0]);
+    const rotationInRadians = useRef(0);
+    const startAnimationTime = useRef(0);
+    const initialPoints = useRef([[0, 0], [0, 0], [0, 0], [0, 0]]);
+    const animationTime = 3000;
+    const horizontalWayLength = 5;
 
-  useEffect(() => {
-    const {ax, ay, bx, by, cx, cy} = properties;
+    useEffect(() => {
+      const {points: entryPoints, rotationInDegrees} = properties;
 
-    center.current = [(ax + bx + cx) / 3, (ay + by + cy) / 3];
+      triangleCenter.current = entryPoints
+        .reduce((acc, p) => [acc[0] + p[0], acc[1] + p[1]], [0, 0])
+        .map(el => el / 3);
 
-    setPoints([[ax, ay], [bx, by], [cx, cy], [ax, ay]]);
-  }, [properties]);
+      rotationInRadians.current = rotationInDegrees / 180 * Math.PI;
+      initialPoints.current = [...entryPoints, entryPoints[0]];
 
-  useEffect(() => {
-    if (points) {
+      setPoints(initialPoints.current);
+
+      if (entryPoints.flat(2).filter(p => p !== 0).length) {
+        const timerId = setTimeout(() => {
+          startAnimationTime.current = performance.now();
+
+          setAnimating(true);
+        }, 1000);
+
+        return () => {
+          clearTimeout(timerId);
+        };
+      }
+    }, [properties]);
+
+    useEffect(() => {
       const svg = select(ref.current);
 
       const width = 600, height = 600;
@@ -70,39 +91,66 @@ const View = ({properties}) => {
       svg
         .select('.y-axis')
         .call(yAxis);
-    }
+    }, [points]);
 
-    const timerId = setTimeout(() => {
-      setAnimating(true)
-    }, 500)
+    useEffect(() => {
+      if (animating) {
+        const requestId = requestAnimationFrame(() => {
+          let timeDifference = performance.now() - startAnimationTime.current;
 
-    return () => {
-        clearTimeout(timerId)
-    }
-  }, [points]);
+          const tc = triangleCenter.current;
+          const initPoints = initialPoints.current;
+          const rotation = rotationInRadians.current;
 
-  useEffect(() => {
-    if (animating) {
+          if (timeDifference > animationTime) {
+            setAnimating(false);
+            timeDifference = animationTime;
+          }
 
-    }
-  })
+          const partTime = timeDifference / animationTime;
 
-  return (
-    <Grid container direction={'column'} style={{height: '100%'}}>
-      <Grid item className={classes.viewTitleContainer}>
-        <Typography className={classes.viewTitle}>View</Typography>
-      </Grid>
-      <Grid item container justify={'center'} alignItems={'center'} style={{height: '90%'}}>
-        <Grid item>
-          <svg ref={ref}>
-            <path/>
-            <g className={'x-axis'}/>
-            <g className={'y-axis'}/>
-          </svg>
+          setPoints(prevPoints => (
+            prevPoints.map((p, i) => {
+              const initX = initPoints[i][0];
+              const initY = initPoints[i][1];
+              const radius = Math.sqrt((tc[0] - initX) ** 2 + (tc[1] - initY) ** 2);
+              const startAngle = Math.atan2(initY - tc[1], initX - tc[0]);
+              const currentAngle = rotation * partTime;
+              const nextAngle = startAngle - currentAngle;
+              const currentHorizontalWayLength = horizontalWayLength * partTime;
+              const x = radius * Math.cos(nextAngle) + tc[0] + currentHorizontalWayLength;
+              const y = radius * Math.sin(nextAngle) + tc[1];
+
+              return [x, y];
+            })
+          ));
+        });
+
+        return () => {
+          cancelAnimationFrame(requestId);
+        };
+      }
+      ;
+    })
+    ;
+
+    return (
+      <Grid container direction={'column'} style={{height: '100%'}}>
+        <Grid item className={classes.viewTitleContainer}>
+          <Typography className={classes.viewTitle}>View</Typography>
+        </Grid>
+        <Grid item container justify={'center'} alignItems={'center'} style={{height: '90%'}}>
+          <Grid item>
+            <svg ref={ref}>
+              <path/>
+              <g className={'x-axis'}/>
+              <g className={'y-axis'}/>
+            </svg>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  );
-};
+    );
+  }
+;
 
 export default View;
