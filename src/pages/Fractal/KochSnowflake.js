@@ -192,11 +192,11 @@ const KochSnowflake = ({
     switch (colorScheme) {
       case 'transparent':
         return ['transparent', 'black']
-      case 'colorSchema1':
+      case 'colorScheme1':
         return ['red', 'blue']
-      case 'colorSchema2':
+      case 'colorScheme2':
         return ['blue', 'green']
-      case 'colorSchema3':
+      case 'colorScheme3':
         return ['green', 'red']
       default:
         return ['transparent', 'black']
