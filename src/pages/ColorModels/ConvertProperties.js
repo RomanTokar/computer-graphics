@@ -1,52 +1,17 @@
-import React from 'react';
-import {Button, Grid, Typography} from '@material-ui/core';
-import {Formik, Form, Field} from 'formik';
-import * as yup from 'yup';
-import convert from 'color-convert';
-import CustomTextField from '../../layous/CustomTextField';
+import React, {memo} from 'react';
+import {Grid, TextField} from '@material-ui/core';
 
-const validationSchema = yup.object({
-  hsl: yup
-    .string()
-    .trim()
-    .required()
-    .matches(
-      /^(?:36[0]|3[0-5][0-9]|[12][0-9][0-9]|[1-9]?[0-9])\s+(100|[1-9][0-9]|[0-9])\s+(100|[1-9][0-9]|[0-9])%?$/,
-      'Incorrect HSL')
-});
-
-const ConvertProperties = () => {
+const ConvertProperties = memo(({hsl, cmyk}) => {
   return (
-    <Formik
-      initialValues={{
-        hsl: '',
-        cmyk: ''
-      }}
-      validationSchema={validationSchema}
-      onSubmit={({hsl}, {setFieldValue}) => {
-        const cmyk = convert.hsl.cmyk(hsl.split(' ')).join(' ');
-
-        setFieldValue('cmyk', cmyk);
-      }}
-    >
-      <Form>
-        <Grid container direction={'column'} spacing={4} alignItems={'center'}>
-          <Grid item>
-            <Typography>Convert HSL into CMYK</Typography>
-          </Grid>
-          <Grid item>
-            <Field name={'hsl'} label={'HSL'} as={CustomTextField}/>
-          </Grid>
-          <Grid item>
-            <Field disabled name={'cmyk'} label={'CMYK'} as={CustomTextField}/>
-          </Grid>
-          <Grid item>
-            <Button type={'submit'} color={'primary'} variant={'contained'}>Convert</Button>
-          </Grid>
-        </Grid>
-      </Form>
-    </Formik>
+    <Grid container direction={'column'} spacing={4} alignItems={'center'}>
+      <Grid item>
+        <TextField disabled value={hsl} name={'hsl'} label={'HSL'} variant={'outlined'}/>
+      </Grid>
+      <Grid item>
+        <TextField disabled value={cmyk} name={'cmyk'} label={'CMYK'} variant={'outlined'}/>
+      </Grid>
+    </Grid>
   );
-};
+})
 
 export default ConvertProperties;

@@ -5,7 +5,7 @@ import ConvertProperties from './ConvertProperties';
 
 const Properties = ({
   setFileSrc, setBlueFilterBrightness, setBlueFilterSaturation,
-  blueFilterBrightness, blueFilterSaturation
+  blueFilterBrightness, blueFilterSaturation, hsl, cmyk
 }) => {
   return (
     <>
@@ -15,7 +15,7 @@ const Properties = ({
       }}
       />
       <Divider style={{margin: '20px 0'}}/>
-      <ConvertProperties/>
+      <ConvertProperties {...{hsl, cmyk}}/>
     </>
   );
 };

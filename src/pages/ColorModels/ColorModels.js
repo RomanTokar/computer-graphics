@@ -5,20 +5,27 @@ import View from './View';
 
 const ColorModels = () => {
   const [fileSrc, setFileSrc] = useState('');
-  const [blueFilterSaturation, setBlueFilterSaturation] = useState(100);
-  const [blueFilterBrightness, setBlueFilterBrightness] = useState(100);
+  const [blueFilterSaturation, setBlueFilterSaturation] = useState(50);
+  const [blueFilterBrightness, setBlueFilterBrightness] = useState(50);
+  const [hsl, setHsl] = useState('');
+  const [cmyk, setCmyk] = useState('');
 
   return (
     <MainWrapper
       Properties={
         <Properties {...{
           setFileSrc, setBlueFilterBrightness, setBlueFilterSaturation,
-          blueFilterSaturation, blueFilterBrightness
+          blueFilterSaturation, blueFilterBrightness, hsl, cmyk
         }}
         />
       }
       View={
-        <View {...{fileSrc, blueFilterBrightness, blueFilterSaturation}}/>
+        <View {...{
+          fileSrc,
+          blueFilterBrightness,
+          blueFilterSaturation,
+          setHsl, setCmyk
+        }}/>
       }
     />
   );

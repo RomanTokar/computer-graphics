@@ -37,11 +37,11 @@ const FileProperties = ({
         </Button>
       </Grid>
       <Grid item>
-        <Typography>Blue Filter Saturation</Typography>
+        <Typography>Blue Filter Saturation ({blueFilterSaturation})</Typography>
         <Slider value={blueFilterSaturation} onChange={handleSaturationChange}/>
       </Grid>
       <Grid item>
-        <Typography>Blue Filter Brightness</Typography>
+        <Typography>Blue Filter Brightness ({blueFilterBrightness})</Typography>
         <Slider value={blueFilterBrightness} onChange={handleBrightnessChange}/>
       </Grid>
     </Grid>
